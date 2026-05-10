@@ -1,14 +1,35 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from src.routes import auth_router, idea_router, ai_router
+from src.lib.db.database import engine, Base
+
+from src.lib.db.models.user import User
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    print("Database connected and tables created.")
+    yield
+    await engine.dispose()
 
 app = FastAPI(
     title="AI Startup Mentor API",
     description="Backend for AI Platform.",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
-# CORS configuration
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=400,
+        content={"success": False, "error": "Validation error", "details": exc.errors()}
+    )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
