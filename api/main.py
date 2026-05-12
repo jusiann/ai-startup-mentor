@@ -38,6 +38,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_router.router)
+app.include_router(ai_router.router)
+app.include_router(idea_router.router)
+
 app.include_router(auth_router.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(idea_router.router, prefix="/api/idea", tags=["Idea"])
 app.include_router(ai_router.router, prefix="/api/ai", tags=["AI"])
