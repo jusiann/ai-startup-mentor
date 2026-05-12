@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Optional
 from src.controllers import auth_controller
 from src.lib.db.database import get_db
 from src.lib.db.schemas import user_schema
@@ -13,7 +15,15 @@ async def register(user_data: user_schema.UserCreate, db: AsyncSession = Depends
     return await auth_controller.register(user_data, db)
 
 @router.post("/login")
-async def login(user_data: user_schema.UserLogin, db: AsyncSession = Depends(get_db)):
+async def login(
+    user_data: Optional[user_schema.UserLogin] = Body(None), 
+    form_data: OAuth2PasswordRequestForm = Depends(), 
+    db: AsyncSession = Depends(get_db)
+):
+    # Eğer JSON gelmediyse (Swagger Formu kullanılıyorsa) veriyi Form'dan al
+    if user_data is None:
+        user_data = user_schema.UserLogin(email=form_data.username, password=form_data.password)
+    
     return await auth_controller.login(user_data, db)
 
 @router.post("/logout")

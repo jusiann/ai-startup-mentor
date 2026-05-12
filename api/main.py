@@ -27,7 +27,7 @@ app = FastAPI(
 async def validation_exception_handler(request, exc):
     return JSONResponse(
         status_code=400,
-        content={"success": False, "error": "Validation error", "details": exc.errors()}
+        content={"success": False, "error": "Validation error", "details": str(exc.errors())}
     )
 
 app.add_middleware(
