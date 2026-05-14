@@ -4,7 +4,7 @@ Türkçe sohbet ile girişim fikirlerini analiz eden, SWOT/pazar/iş modeli rapo
 
 ## Özellikler
 
-- OpenAI tabanlı Türkçe mentör sohbeti (`gpt-4o-mini`)
+- Google Gemini tabanlı Türkçe mentör sohbeti (`gemini-3-flash`)
 - Yeterli bilgi toplandığında otomatik **SWOT + pazar + iş modeli** analizi
 - Ağırlıklı **0-100 skorlama** algoritması
 - Wikipedia REST API üzerinden basit **pazar/rakip veri toplayıcı**
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 `.env` dosyası oluşturun:
 
 ```
-OPENAI_API_KEY=sk-...
+GEMINI_API_KEY=...
 SECRET_KEY=change-me-in-production
 
 PGUSER=postgres
