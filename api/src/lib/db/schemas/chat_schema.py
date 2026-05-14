@@ -1,16 +1,16 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field
 from datetime import datetime
 
-class MessageCreate(BaseModel):
-    session_id: Optional[str] = None
-    message: str
 
-class MessageResponse(BaseModel):
+class ChatRequest(BaseModel):
+    message: str = Field(..., min_length=1, max_length=4000)
+
+
+class ChatMessageResponse(BaseModel):
     id: int
-    sender: str
-    message: str
-    timestamp: datetime
+    role: str
+    content: str
+    created_at: datetime
 
     class Config:
         from_attributes = True

@@ -7,6 +7,8 @@ from src.routes import auth_router, idea_router, ai_router
 from src.lib.db.database import engine, Base
 
 from src.lib.db.models.user import User
+from src.lib.db.models.chat import Chat
+from src.lib.db.models.idea import Idea
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
