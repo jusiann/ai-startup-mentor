@@ -1,3 +1,4 @@
+# Utku Uğurlu 231201016
 import os
 import json
 import google.generativeai as genai

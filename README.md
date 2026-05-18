@@ -1,4 +1,4 @@
-# AI Startup Mentor
+# AI Startup Mentorr
 
 Türkçe sohbet ile girişim fikirlerini analiz eden, SWOT/pazar/iş modeli raporu üretip skorlayan FastAPI backend.
 
